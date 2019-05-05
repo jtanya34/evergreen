@@ -1,29 +1,34 @@
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import Box, { BoxProps } from 'ui-box'
-import { withTheme } from '../../theme'
+import { withTheme, Theme } from '../../theme'
 
-interface Theme {
-  getTextStyle: (size?: number) => any
-  getTextColor: (colorAlias?: string) => string
-  getFontFamily: (fontFamily?: string) => string
-}
+type Size = 300 | 400 | 500 | 600
+type FontFamily = 'ui' | 'display' | 'mono'
 
-interface TextProps {
+interface TextProps extends BoxProps {
   /** The color (alias or valid color) applied to the text */
   color?: string
   /** The font family alias applied to the text */
-  fontFamily?: 'ui' | 'display' | 'mono'
+  fontFamily?: FontFamily
   /** The size of the text style */
-  size?: 300 | 400 | 500 | 600
+  size?: Size
   /** Theme provided by ThemeProvider. */
   theme: Theme
 }
 
-class Text extends PureComponent<TextProps & BoxProps> {
-  static defaultProps: Partial<TextProps> = {
-    size: 400,
+class Text extends PureComponent<TextProps> {
+  static propTypes = {
+    color: PropTypes.string,
+    fontFamily: PropTypes.oneOf(['ui', 'display', 'mono']) as React.Validator<
+      FontFamily
+    >
+  }
+
+  static defaultProps = {
+    size: 400 as Size,
     color: 'default',
-    fontFamily: 'ui'
+    fontFamily: 'ui' as FontFamily
   }
 
   render() {
@@ -33,9 +38,8 @@ class Text extends PureComponent<TextProps & BoxProps> {
       size
     )
 
-    const finalMarginTop = marginTop === 'default'
-      ? defaultMarginTop
-      : marginTop
+    const finalMarginTop =
+      marginTop === 'default' ? defaultMarginTop : marginTop
 
     return (
       <Box

@@ -1,16 +1,15 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import Box, { BoxProps } from 'ui-box'
 
-export default class OrderedList extends PureComponent<any & BoxProps> {
-  static propTypes = {
-    /**
-     * Size of the text used in a list item.
-     * Can be: 300, 400, 500, 600.
-     */
-    size: PropTypes.oneOf([300, 400, 500, 600]).isRequired
-  }
+interface OrderedListProps extends BoxProps {
+  /**
+   * Size of the text used in a list item.
+   * Can be: 300, 400, 500, 600.
+   */
+  size: 300 | 400 | 500 | 600
+}
 
+export default class OrderedList extends PureComponent<OrderedListProps> {
   static defaultProps = {
     size: 400
   }
